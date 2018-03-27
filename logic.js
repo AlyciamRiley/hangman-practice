@@ -46,14 +46,13 @@ $(document).ready(function(){
 function checkLetter() {
     //user inputs guess
     document.onkeyup = function() {
-        userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+        var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
         console.log("user guess", userGuess);
         
-         
-      for (var j = 0; j < lettersInWord.length; j++) {
-          console.log("letters in word", lettersInWord[j]);
+var correctLetter = lettersInWord.indexOf(userGuess);
+console.log("correct letter", correctLetter)
 
-          if ($.inArray("x", lettersInWord.length) !== -1) {
+          if (correctLetter >=0 ){
               console.log("is in array");
           } else {
               console.log("is not in the array");
@@ -64,8 +63,6 @@ function checkLetter() {
 
       }
     }
-
-}
 
 renderWord();
 checkLetter();
