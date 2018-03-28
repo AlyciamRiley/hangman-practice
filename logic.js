@@ -1,5 +1,5 @@
 //Define global variables
-var wordArray = ["Lux", "Ender", "Bruce", "Molly", "Solo", "Steel"];
+var wordArray = ["lux", "ender", "bruce", "molly", "solo", "steel"];
 
 //picks random word from array
 var wordToGuess = wordArray[Math.floor(Math.random() * wordArray.length)];
@@ -20,7 +20,7 @@ var userGuess;
 var wrongLetters
 
 //how many guesses are remaining
-var numGuessesRemaining;
+var guessesLeft = 9;
 
 var winCount;
 var lossCount;
@@ -43,48 +43,34 @@ $(document).ready(function(){
 
     }
 
-function checkLetter() {
+function startGame() {
     //user inputs guess
     document.onkeyup = function() {
         var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
         console.log("user guess", userGuess);
-        
-var correctLetter = lettersInWord.indexOf(userGuess);
-console.log("correct letter", correctLetter)
-
-          if (correctLetter >=0 ){
-              console.log("is in array");
-          } else {
-              console.log("is not in the array");
-          }
 
 
-          
 
+        if (lettersInWord.indexOf(userGuess) >= 0) {
+            console.log("Is in array")
+            
+            //how do I get letters to replace the underscores?
+            lettersInWord.join(userGuess);
+
+
+        } else {
+            console.log("is not in array");
+            $("#wrong-guesses").append(userGuess);
+            guessesLeft--;
+            $("#guesses-left").text(guessesLeft);
+
+
+        }
       }
     }
 
 renderWord();
-checkLetter();
-
-//User chooses letter
-    //if letter is in word, letter populates in word-blanks
-    //if letter is not in word, it will be displayed in wrong-guesses
-    //guessesLeft counter goes down
-
-    //if guessesLef=0, user loses, loss counter goes down by 1, user is prmopted to start over.
-    //if all letters are guessed, win counter is updated, prmopted to start again.
-
-
-
-
-
-
-
-
-
-
-
+startGame();
 
 })
 
