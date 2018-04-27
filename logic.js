@@ -17,7 +17,9 @@ var numBlanks = [];
 var userGuess;
 
 //wrong letters
-var wrongLetters
+var wrongLetters;
+
+var matchedLetters = []
 
 //how many guesses are remaining
 var guessesLeft = 9;
@@ -46,17 +48,14 @@ $(document).ready(function(){
 function startGame() {
     //user inputs guess
     document.onkeyup = function() {
-        var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+        
         console.log("user guess", userGuess);
 
 
 
         if (lettersInWord.indexOf(userGuess) >= 0) {
             console.log("Is in array")
-            
-            //how do I get letters to replace the underscores?
-            lettersInWord.join(userGuess);
-
+            rebuildWordView();
 
         } else {
             console.log("is not in array");
@@ -69,9 +68,27 @@ function startGame() {
       }
     }
 
+    function rebuildWordView () {
+        //empty string
+        var wordView = "";
+        // Loop through letteres of the word we are trying to guess
+        for (var j = 0; j < this.lettersInWord.length; j++) {
+            //if current letter has been guesses, display that letter. 
+            if (this.userGuess.indexOf(this.lettersInWord[j])
+        !== -1) {
+            wordView += this.lettersInWord[j];
+        }
+        else {
+            wordView += "&nbsp;*&nbsp;";
+            }
+        }
+
+        document.querySelector("#word-blanks").innerHTML = wordView;
+    };
 renderWord();
 startGame();
 
-})
+});
+
 
 
