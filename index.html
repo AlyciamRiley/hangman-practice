@@ -11,6 +11,9 @@
 
   <!--jQuery CDN-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+<!--stylesheet-->
+<link rel='stylesheet' href="style.css">
 </head>
 
 <body>
@@ -21,9 +24,9 @@
     <!-- Jumbotron holds the title section. -->
     <div class='jumbotron'>
       <div class='container'>
-        <h1>Coding Bootcamp - Hangman</h1>
+        <h1>Hangman</h1>
         <h2>Guess the coding word! </h2>
-        <small>Click any letter to begin...</small>
+        <small>Click any letter to begin</small>
       </div>
     </div>
 
@@ -35,9 +38,15 @@
         <div class='panel panel-default'>
           <div class='panel-heading'>
             <h3 class='panel-title'><strong>Word to Guess</strong></h3>
+            <button onclick="renderGame()" class="start-button">Click start to begin</button>
           </div>
-
+            <div id="modal">
+              <div id="win-lose-text"></div>
+              <button class="play-again">play again</button>
+            </div>
+         
           <div class='panel-body'>
+            
 
             <!-- This h3 section called word-blanks is what we'll be replacing with letters as the user guesses. Pay particular attention to the id called ***word-blanks***. We'll be referencing this in the JavaScript. -->
             <h3 id='word-blanks'></h3>

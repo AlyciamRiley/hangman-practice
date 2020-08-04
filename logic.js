@@ -29,16 +29,20 @@ var availableWords = [
 var splitWord;
 var guessedLetter;
 var numBlanks = [];
-var lettersGuessed = [];
 var correctGuesses = [];
+var numCorrect = 0;
 var incorrectGuesses = [];
-var guessesRemaining = 10;
+var guessesRemaining;
 var wins = 0;
 var losses = 0;
+var youWon = false;
 
 //Functions
 //Page loads
 function renderGame() {
+  document.querySelector(".start-button").style.display = "none";
+  document.querySelector(".play-again").style.display = "none";
+  document.querySelector("#modal").style.display = "none";
   //Word to guess
   document.querySelector("#word-blanks").innerHTML = numBlanks.join("");
   //wrong guesses
@@ -53,11 +57,13 @@ function renderGame() {
 
 //Random word is chosen from array
 function generateWord() {
+    document.querySelector("#modal").style.display = "none";
   var randomWord =
     availableWords[Math.floor(Math.random() * availableWords.length)];
   console.log("randomWord: ", randomWord);
   //Split word up into individual characters
     splitWord = randomWord.split("");
+    guessesRemaining = splitWord.length + 5;
   //Loop over splitWord and display dashes??
   for (var i = 0; i < splitWord.length; i++) {
     numBlanks.push(" _ ");
@@ -65,31 +71,65 @@ function generateWord() {
 }
 
 //get user input and compare
-document.addEventListener('keyup', function (event) {
+document.addEventListener('keydown', function (event) {
+      
   guessedLetter = event.key;
   if (splitWord.includes(guessedLetter)) {
-    correctGuesses.push(guessedLetter);
+    //not pushing multiple instances of variable
+    correctGuesses.push(guessedLetter)
+    checkWinLose();
+    displayCorrectGuesses();
+ 
+    numCorrect++;
   } else {
     incorrectGuesses.push(guessedLetter);
   }
-  
-  guessesRemaining--;   
+  guessesRemaining--;
   renderGame();
-  displayCorrectGuesses();
+  checkWinLose(); 
 });
 
 //display correct guesses
 function displayCorrectGuesses(){
   splitWord.forEach(function (item, i) { 
-    var index = item.indexOf(guessedLetter);
+    var index = item.indexOf(guessedLetter);      
     if (index !== -1) {
       numBlanks[i] = guessedLetter; 
-  }
+      
+  } 
 });
-renderGame();
 }
 
 
+//check win/lose
 
-generateWord();
-renderGame();
+function checkWinLose(){
+  if (guessesRemaining <= 0) {
+    numBlanks = [];
+    losses++;
+    document.querySelector("#modal").innerHTML = "You lose!";
+    document.querySelector("#modal").style.display = "inline-block";
+  } if (numCorrect == numBlanks.length) {
+    wins++;
+    numBlanks = [];
+    document.querySelector("#win-lose-text").innerHTML = "You Win!";
+    document.querySelector(".play-again").style.display = "inline-block";
+    document.querySelector("#modal").style.display = "inline-block";
+    document.querySelector("#win-counter").innerHTML = wins;
+
+
+
+  }
+}
+  $(document).on("click", ".play-again", function () {
+    guessedLetter = null;  
+    correctGuesses= [];
+    incorrectGuesses = [];    
+    guessesRemaining = [];
+    numCorrect = [];
+    generateWord();
+    renderGame();
+  });
+
+  generateWord();
+
