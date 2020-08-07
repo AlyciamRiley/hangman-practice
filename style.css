@@ -1,0 +1,35 @@
+h4 {
+    text-align: center;
+}
+
+.game-stats-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.guesses-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.small-boxes {
+    display: flex;
+        
+}
+
+.stats {    
+    padding: 0 15px;
+    height: 150px;
+    width: 33%;
+    text-align: center;
+    font-size: 80px;
+    font-weight: 700;   
+}
+
+#losses {
+    color: red;
+}
+
+#wins {
+    color: green;
+}
